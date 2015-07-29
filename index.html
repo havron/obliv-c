@@ -66,15 +66,23 @@ The language comes with numerous protocols built in which allow a programmer to 
 One particularly useful application of Obliv-C is in allowing for <a href="#linReg">aggregate data analysis</a> from private datasets.</p>
   
   <h2>Setting up the Obliv-C Environment</h2>
-  <p></p>
+  <p><b>Installation for Ubuntu systems:</b><br><ol>
+    <li>Run `sudo apt-get install ocaml libgcrypt20-dev`.</li>
+    <li>Clone the repository using git, or download and unpack it from its <a href="https://github.com/samuelhavron/obliv-c/archive/linReg.zip">.zip</a> or
+  <a href="https://github.com/samuelhavron/obliv-c/archive/linReg.tar.gz">.tar.gz</a> file.</li>
+  <li>cd into the `obliv-c` directory.</li>
+  <li>Run `./configure && make RELEASE=1`.</li>
+  </ol>
+  You are ready to go! Take a look at the code in the <a href="https://github.com/samuelhavron/obliv-c/tree/linReg/tutorial">tutorial</a> before writing your own programs.
+  </p>
   <h3>Using Amazon Web Services?</h3>
-      <p>Do you want to start testing your Obliv-C program over two servers, but avoid the installation process? Use this (not yet linked) custom Amazon Machine Image (AMI) 
+      <p>Do you want to start testing your Obliv-C program over servers, but avoid the installation process? Use this (not yet linked) custom Amazon Machine Image (AMI) 
         and quickly launch EC2 instances with an Obliv-C environment ready to go. Run `cd obliv-c && git pull` before compiling code.</p>
   
   <a name="linReg"></a>
   <h2>Testing out Obliv-C with data analysis program</h2>
   <p>You may have noticed a folder in the <a href="https://github.com/samuelhavron/obliv-c/tree/linReg/tutorial">tutorial directory</a> named 'olinReg'. 
-    This is an implementation of linear regression with Obliv-C, a tool that allows two parties to compute the correlation of their joint data. See the <a href="https://github.com/samuelhavron/obliv-c/blob/linReg/tutorial/olinReg/README.md">README</a> to get started.
+    This is an implementation of linear regression, a tool that allows two parties to compute the correlation of their joint data. See the <a href="https://github.com/samuelhavron/obliv-c/blob/linReg/tutorial/olinReg/README.md">README</a> to get started.
     </p>
 
   <h2>Writing and running your first Obliv-C program</h2>
