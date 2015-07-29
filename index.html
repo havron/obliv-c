@@ -57,10 +57,28 @@
     <div id="content-wrapper">
       <div class="inner clearfix">
         <section id="main-content">
-          <h2>
-<a id="introduction-to-obliv-c" class="anchor" href="#introduction-to-obliv-c" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction to Obliv-C</h2>
+          <h1>
+<a id="introduction-to-obliv-c" class="anchor" href="#introduction-to-obliv-c" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction to Obliv-C</h1>
 
-<p>This page will include a tutorial on using Obliv-C.</p>
+<p> Obliv-C is a lightweight GCC wrapper that makes it simple for multiple parties to compute a joint function on their private inputs. 
+A full description of the language can be found <a href="http://www.oblivc.org">here</a>. 
+The language comes with numerous protocols built in which allow a programmer to quickly implement a secure multiparty computation. 
+One particularly useful application of Obliv-C is in allowing for <a href="#linReg">aggregate data analysis</a> from private datasets.</p>
+  
+  <h2>Setting up the Obliv-C Environment</h2>
+  <p></p>
+  <h3>Using Amazon Web Services?</h3>
+      <p>Do you want to start testing your Obliv-C program over two servers, but avoid the installation process? Use this (not yet linked) custom Amazon Machine Image (AMI) 
+        and quickly launch EC2 instances with an Obliv-C environment ready to go. Run `cd obliv-c && git pull` before compiling code.</p>
+  
+  <a name="linReg"></a>
+  <h2>Testing out Obliv-C with data analysis program</h2>
+  <p>You may have noticed a folder in the <a href="https://github.com/samuelhavron/obliv-c/tree/linReg/tutorial">tutorial directory</a> named 'olinReg'. 
+    This is an implementation of linear regression with Obliv-C, a tool that allows two parties to compute the correlation of their joint data. See the <a href="https://github.com/samuelhavron/obliv-c/blob/linReg/tutorial/olinReg/README.md">README</a> to get started.
+    </p>
+
+  <h2>Writing and running your first Obliv-C program</h2>
+  <p></p>
         </section>
 
         <aside id="sidebar">
