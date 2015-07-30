@@ -59,7 +59,8 @@ body {
  }
   #nav ul li {
     display: block;
-    position: relative;
+    position: absolute;
+    bottom:10px;
     float: left;
  }
  #nav li ul {
