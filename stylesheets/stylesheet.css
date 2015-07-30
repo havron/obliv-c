@@ -51,6 +51,24 @@ body {
     #nav li a:hover {
     	color: #c00;
     	background-color: #fff; }
+    
+    #nav li ul {
+   display: none; 
+   width: 10em; /* Width to help Opera out */
+   background-color: #69f;}
+#nav li:hover ul, #navbar li.hover ul {
+   display: block;
+   position: absolute;
+   margin: 0;
+   padding: 0; }
+#nav li:hover li, #navbar li.hover li {
+   float: none; }
+#nav li:hover li a, #navbar li.hover li a {
+   background-color: #69f;
+   border-bottom: 1px solid #fff;
+   color: #000; }
+#nav li li a:hover {
+   background-color: #8db3ff; }
   
 article,
 aside,
