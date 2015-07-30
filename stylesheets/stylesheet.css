@@ -59,8 +59,7 @@ body {
  }
   #nav ul li {
     display: block;
-    position: absolute;
-    bottom:10px;
+    position: relative;
     float: left;
  }
  #nav li ul {
@@ -83,6 +82,15 @@ body {
     display: block;
     position: absolute;
  }
+
+ #nav li:hover li {
+    float: none;
+    font-size: 11px;
+}
+ #nav li:hover a { background: #3b3b3b; }
+ #nav li:hover li a:hover {
+    background: #1e7c9a;
+}
   
 article,
 aside,
