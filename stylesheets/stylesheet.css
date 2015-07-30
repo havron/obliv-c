@@ -51,6 +51,37 @@ body {
     #nav li a:hover {
     	color: #c00;
     	background-color: #fff; }
+    	  
+   #nav	ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+ }
+  #nav ul li {
+    display: block;
+    position: relative;
+    float: left;
+ }
+ #nav li ul {
+    display: none;
+ }
+ #nav ul li a {
+    display: block;
+    text-decoration: none;
+    color: #ffffff;
+    border-top: 1px solid #ffffff;
+    padding: 5px 15px 5px 15px;
+    background: #1e7c9a;
+    margin-left: 1px;
+    white-space: nowrap;
+ }
+ #nav ul li a:hover {
+  background: #3b3b3b;
+ }
+#nav li:hover ul {
+    display: block;
+    position: absolute;
+ }
   
 article,
 aside,
