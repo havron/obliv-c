@@ -37,10 +37,24 @@
     <div id="content-wrapper">
       <div class="inner clearfix">
         <section id="main-content">
-  <h1>Documentation for Obliv-C protocols</h1>
-  <p><b>Coming soon! Will make subpage /obliv-c/documentation for this.</b></p>
+  <h1>Documentation for Obliv-C</h1>
+  <h2>About this Documentation</h2>
+  <p>The below documentation of Obliv-C protocols, types, functions, qualifiers, and other aspects of the language is 
+  by no means comprehensive, nor is it the standard documentation for the Obliv-C language.
+  The documentation is included for the sole purpose of making it simpler for users to understand how to write programs 
+  in Obliv-C successfully, and uses an informal tone to achieve this purpose. The organization of the documentation is alphabetical.
+  <a href="http://samuelhavron.github.io/contact">Contact the author</a> of the documentation 
+  with any issues, corrections, or queries.</p>
   
-  <p><a href="#top">Top of page</a></p>
+  <h2>cleanupProtocol(ProtocolDesc* pd)</h2>
+  <p>Call this function in your C file after execYaoProtocol() has been called. This function will clean up the ProtocolDesc.</p>
+  <h2>execYaoProtocol(ProtocolDesc* pd, protocol_run start, void* arg)</h2>
+  <p>Call this function in your C file's main() function to execute the Yao protocol. 
+  Supply the starting function name (without parentheses) in the Obliv-C file as
+  the parameter for <code>protocol_run start</code>. Supply any arguments for the Obliv-C starting function in <code>void* arg</code>.
+  </p>
+  
+  <p><a href="#top">Go to top</a></p>
         </section>
 
         <aside id="sidebar">
