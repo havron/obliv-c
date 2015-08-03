@@ -48,14 +48,14 @@
   
   <h1>Functions</h1>
   <h2>void cleanupProtocol(ProtocolDesc* pd)</h2>
-  <p>Requires <code>#include <obliv.h></code>. Call this function in your C file after execYaoProtocol() has been called. This function will clean up the ProtocolDesc.</p>
+  <p>Requires <code>#include &lt;obliv.h&gt;</code>. Call this function in your C file after execYaoProtocol() has been called. This function will clean up the ProtocolDesc.</p>
   <h2>void execYaoProtocol(ProtocolDesc* pd, protocol_run start, void* arg)</h2>
-  <p>Requires <code>#include <obliv.h></code>. Call this function in your C file's main() function to execute the Yao protocol. 
+  <p>Requires <code>#include &lt;obliv.h&gt;</code>. Call this function in your C file's main() function to execute the Yao protocol. 
   Supply the starting function name (without parentheses) in the Obliv-C file as
   the parameter for <code>protocol_run start</code>. Supply any arguments for the Obliv-C starting function in <code>void* arg</code>.
   </p>
   <h2>void setCurrentParty(ProtocolDesc* pd, int party)</h2>
-  <p>Requires <code>#include <obliv.h></code>. Sets the proper parties into the ProtocolDesc. Call this before calling execYaoProtocol().</p>
+  <p>Requires <code>#include &lt;obliv.h&gt;</code>. Sets the proper parties into the ProtocolDesc. Call this before calling execYaoProtocol().</p>
   
   
   <p><a href="#top">Go to top</a></p>
