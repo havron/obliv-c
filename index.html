@@ -80,10 +80,11 @@ Check out the <a href="http://samuelhavron.github.io/obliv-c/documentation">docu
   to call Obliv-C's built in functions. <code>ProtocolDesc pd</code> is initialized, which is used as an argument for several
   essential functions. After storing commandline arguments 
   (hostname, TCP port, party, and data filename) to a struct in linReg.h, a connection must be established between 
-  the two parties. The first party calls <code>protocolAcceptTcp2P()</code> to listen for a connection; the second party
+  the two parties. 
+  <br>The first party calls <code>protocolAcceptTcp2P()</code> to listen for a connection; the second party
   then calls <code>protocolConnectTcp2P()</code>, supplying the hostname from the commandline argument and connecting to
   the first party. <code>setCurrentParty()</code> is called, which allows the <code>ProtocolDesc pd</code> 
-  to keep track of parties. Now, <code>execYaoProtocol()</code> is called; this function begins linReg.oc's code at the supplied
+  to keep track of parties. <br>Now, <code>execYaoProtocol()</code> is called; this function begins linReg.oc's code at the supplied
   function name: linReg().
   </p>
   <h3>Loading local data and sharing obliv qualified data</h3>
