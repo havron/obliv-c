@@ -50,7 +50,7 @@ Check out the <a href="http://samuelhavron.github.io/obliv-c/documentation">docu
   <p><b>Installation for Ubuntu systems:</b>
   <ol>
     <li>Run <code>sudo apt-get install ocaml libgcrypt20-dev</code>.</li>
-    <li>Clone the repository using git, or download and unpack it from its <a href="https://github.com/samuelhavron/obliv-c/archive/linReg.zip">.zip</a> or
+    <li>Clone the repository using git (run <code>git clone https://www.github.com/samuelhavron/obliv-c.git</code>, or download and unpack it from its <a href="https://github.com/samuelhavron/obliv-c/archive/linReg.zip">.zip</a> or
   <a href="https://github.com/samuelhavron/obliv-c/archive/linReg.tar.gz">.tar.gz</a> file.</li>
     <li>Get to the obliv-c directory with <code>cd obliv-c</code>.</li>
     <li>Run <code>./configure && make RELEASE=1</code>.</li>
@@ -59,26 +59,36 @@ Check out the <a href="http://samuelhavron.github.io/obliv-c/documentation">docu
   </p>
   <h3>Using Amazon Web Services?</h3>
       <p>Do you want to start testing your Obliv-C program over servers, but avoid the installation process? Use this (not yet linked) custom Amazon Machine Image (AMI) 
-        and quickly launch EC2 instances with an Obliv-C environment ready to go. Run <code>cd ~/obliv-c && git pull</code> before compiling code.</p>
+        and quickly launch EC2 instances with an Obliv-C environment ready to go.</p>
   
   <a name="linReg"></a>
   <h2>Testing out Obliv-C with data analysis program</h2>
   <p>You may have noticed a folder in the <a href="https://github.com/samuelhavron/obliv-c/tree/linReg/tutorial">tutorial directory</a> named 'olinReg'. 
     This is an implementation of linear regression, a tool that allows two parties to compute the correlation of their joint data. 
     See the <a href="https://github.com/samuelhavron/obliv-c/blob/linReg/tutorial/olinReg/README.md">README</a> to get started.
-    More details will be posted here soon!
     </p>
 
-  <h2>Writing and running your first Obliv-C program</h2>
-  <p>This section will include a walkthrough of the following and more:
-  <ul>
-    <li>Quick primer on <code>obliv</code> qualifier</li>
-    <li>Writing a basic a + b Obliv-C program</li>
-    <li>Running some example code, such as the <a href="https://github.com/samuelhavron/obliv-c/tree/linReg/test/oblivc/hamming">hamming distance code</a></li>
-    <li>How to work with Obliv-C protocols such as <code>execYaoProtocol()</code> and establishing TCP connection</li>
-    <li>Learning how to link together .oc and .c files</li>
-    <li>How to best organize code: private processes in .oc, non-private processes in .c</li>
-  </ul>
+  <h2>How an Obliv-C program works</h2>
+  <p> After testing the code in the olinReg directory, you may want to start writing your own programs that take advantage
+  of Obliv-C. This section will walkthrough the processes in the olinReg code needed to make a working program. It is organized
+  chronologically, and emphasizes how to use Obliv-C functions and qualifiers. See the 
+  <a href="http://samuelhavron.github.io/obliv-c/documentation">Obliv-C Documentation</a> page for information on how to use
+  functions described below.
+  
+  <h3>Connecting parties, storing arguments, and executing Yao's protocol</h3>
+  <p>Navigate to <code>main()</code> in linReg.c; notice the <code>#include &lt;obliv.h&gt;</code> needed
+  to call Obliv-C's built in functions. <code>ProtocolDesc pd</code> is initialized, which is used as an argument for several
+  essential functions. After storing commandline arguments 
+  (hostname, TCP port, party, and data filename) to a struct in linReg.h, a connection must be established between 
+  the two parties. The first party calls <code>protocolAcceptTcp2P()</code> to listen for a connection; the second party
+  then calls <code>protocolConnectTcp2P()</code>, supplying the hostname from the commandline argument and connecting to
+  the first party. <code>setCurrentParty()</code> is called, which allows the <code>ProtocolDesc pd</code> 
+  to keep track of parties. Now, <code>execYaoProtocol()</code> is called; this function begins linReg.oc's code at the supplied
+  function name: linReg().
+  </p>
+  <h3>Loading local data and sharing obliv qualified data</h3>
+  <p></p>
+    
   </p>
   <p><a href="#top">Top of page</a></p>
         </section>
