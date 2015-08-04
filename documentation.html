@@ -56,7 +56,7 @@
   <code>void* arg</code>; pass in a struct to supply multiple parameters. Before calling this function, establish a connection
   between parties with protocolAcceptTcp2P() and protocolConnectTcp2P(), and call setCurrentParty().
   </p>
-  <h2><font face="Arial">obliv tname feedOblivInt(tname v, int party)</font></h2>
+  <h2><font face="Arial">obliv tname feedOblivTname(tname v, int party)</font></h2>
   <p>Obliv-C file; requires <code>#include &lt;obliv.oh&gt;</code>. This function returns an <code>obliv</code> qualified 
   <code>tname v</code> from the specified party to both parties. Substitute a type (int, char, bool, short, long, long long) for <code>tname</code>. 
   Floating point numbers are not currently supported by the <code>obliv</code> qualifier. 
