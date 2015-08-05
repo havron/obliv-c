@@ -47,9 +47,17 @@
   
   <h2>Use of tname</h2>
   <p>Valid substitutions for <code>tname</code> are bool, char, int, short, long, or long long, depending on what data type
-  you are need. &lt;Tname&gt; means to substitute in a valid type with the first character of the type capitalized. 
-  The <code>obliv</code> qualifier is not valid for float and double. 
-  Use fixed point arithmetic as a workaround.</p>
+  you are need. <code>&lt;Tname&gt;</code> means to substitute in a valid type with the first character of the type capitalized. 
+  The <code>obliv</code> qualifier is not valid for float or double. 
+  Use fixed point arithmetic as a workaround for these data types.</p>
+  
+  <h2>The obliv qualifier</h2>
+  <p>The <code>obliv</code> qualifier should be declared on any variable that is supposed to 
+  depend on unknown inputs in any way; <code>obliv</code> qualified values implement secure encryption on the variable, and
+  can only be declared in an Obliv-C file (.oc). Supported data types for the <code>obliv</code> qualifier
+  are bool, int, char, short, long, and long long. Non-obliv values can be implicitly converted into obliv, 
+  but obliv values cannot be implicitly converted to non-obliv. Doing this requires revealObliv&lt;Tname&gt;() to be called.
+  </p>
   
   <h2>C Functions</h2>
   <h3><font face="Arial">void cleanupProtocol(ProtocolDesc* pd)</font></h3>
