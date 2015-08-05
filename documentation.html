@@ -96,13 +96,12 @@
   <code>tname v</code> from the specified party to both parties. 
   Floating point numbers are not currently supported by the <code>obliv</code> qualifier. 
   <br> Sample code for using this function to feed an int array from the sepecified party into an obliv int array to both parties:
-    <pre><code>void toObliv(int n, obliv int *oa, int *a, int party) {
+  <pre><code>void toObliv(int n, obliv int *oa, int *a, int party) {
      int i, res;
      for(i = 0; i < n; i++) {
-      oa[i] = feedOblivInt(a[i], party);
+       oa[i] = feedOblivInt(a[i], party);
      }
-    }
-  </code></pre>
+    }</code></pre>
   </p>
   
    <h3><font face="Arial">tname ocBroadcast&lt;Tname&gt;(tname v, int source)</font></h3>
