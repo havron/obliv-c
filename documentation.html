@@ -46,20 +46,44 @@
   <a href="http://samuelhavron.github.io/contact">Contact the author</a> of the documentation 
   with any issues, corrections, or queries.</p>
   
-  <div style="font-face:Arial;">
-  <h1>Functions</h1>
-  <h2>void cleanupProtocol(ProtocolDesc* pd)</h2>
+  <h2>Use of tname</h2>
+  <p>Valid substitutions for <code>tname</code> are bool, char, int, short, long, or long long, depending on what data type
+  you are need. &lt;Tname&gt; means to substitute in a valid type with the first character of the type capitalized. 
+  The <code>obliv</code> qualifier is not valid for float and double. 
+  Use fixed point arithmetic as a workaround.</p>
+  
+  <h2>C Functions</h2>
+  <h3><font face="Arial">void cleanupProtocol(ProtocolDesc* pd)</font></h3>
   <p>C file; requires <code>#include &lt;obliv.h&gt;</code>. Call this function in your C file after execYaoProtocol() has been called. This function will clean up the ProtocolDesc.</p>
-  <h2><font face="Arial">void execYaoProtocol(ProtocolDesc* pd, protocol_run start, void* arg)</font></h2>
+  <h3><font face="Arial">void execYaoProtocol(ProtocolDesc* pd, protocol_run start, void* arg)</font></h3>
   <p>C file; requires <code>#include &lt;obliv.h&gt;</code>. Call this function in your C file's main() function to execute the Yao protocol. 
   Supply the starting function name (without parentheses) in the Obliv-C file as
   the parameter for <code>protocol_run start</code>. Supply any arguments for the Obliv-C starting function in 
   <code>void* arg</code>; pass in a struct to supply multiple parameters. Before calling this function, establish a connection
   between parties with protocolAcceptTcp2P() and protocolConnectTcp2P(), and call setCurrentParty().
   </p>
-  <h2><font face="Arial">obliv tname feedOblivTname(tname v, int party)</font></h2>
+  
+  <h3><font face="Arial">int protocolAcceptTcp2P(ProtocolDesc* pd, const char* port)</font></h3>
+  <p>C file; requires <code>#include &lt;obliv.h&gt;</code>. The first party calls this function to listen for a second party 
+  on the supplied port parameter. Use conditional logic to ensure only the first party calls this function.</p>
+  
+  <h3><font face="Arial">int protocolConnectTcp2P(ProtocolDesc* pd, const char* server, const char* port)</font></h3>
+  <p>
+    C file; requires <code>#include &lt;obliv.h&gt;</code>. The second party should call this function
+    after the first party calls protocolAcceptTcp2P(); 
+    use conditional logic to ensure this. Supply either 'localhost', the IP address, or the DNS name of the 
+    first party to the <code>const char* server</code> parameter.
+  </p>
+  
+  <h3><font face="Arial">void setCurrentParty(ProtocolDesc* pd, int party)</font></h3>
+  <p>C file; requires <code>#include &lt;obliv.h&gt;</code>. Sets the proper parties into the ProtocolDesc. 
+  Call this before calling execYaoProtocol().</p>
+  
+  <h2>Obliv-C Functions</h2>
+  
+  <h3><font face="Arial">obliv tname feedObliv&lt;Tname&gt;(tname v, int party)</font></h3>
   <p>Obliv-C file; requires <code>#include &lt;obliv.oh&gt;</code>. This function returns an <code>obliv</code> qualified 
-  <code>tname v</code> from the specified party to both parties. Substitute a type (int, char, bool, short, long, long long) for <code>tname</code>. 
+  <code>tname v</code> from the specified party to both parties. 
   Floating point numbers are not currently supported by the <code>obliv</code> qualifier. 
   <br> Sample code for using this function to feed an int array from the sepecified party into an obliv int array to both parties:
     <br> <code>void toObliv(int n, obliv int *oa, int *a, int party) { <br>
@@ -70,34 +94,16 @@
     }</code>
   </p>
   
-  <h2><font face="Arial">tname ocBroadcastTname(tname v, int source)</font></h2>
+   <h3><font face="Arial">tname ocBroadcastTname(tname v, int source)</font></h3>
   <p>Obliv-C file; requires <code>#include &lt;obliv.oh&gt;</code>. Returns v from the specified source (party). 
   This function allows non-obliv data to be transferred across parties, similar to <code>feedOblivTname()</code>.
-  Substitutions for <code>tname</code> are bool, char, int, short, long, or long long.
   </p>
-  <h2><font face="Arial">int protocolAcceptTcp2P(ProtocolDesc* pd, const char* port)</font></h2>
-  <p>C file; requires <code>#include &lt;obliv.h&gt;</code>. The first party calls this function to listen for a second party 
-  on the supplied port parameter. Use conditional logic to ensure only the first party calls this function.</p>
   
-  <h2><font face="Arial">int protocolConnectTcp2P(ProtocolDesc* pd, const char* server, const char* port)</font></h2>
-  <p>
-    C file; requires <code>#include &lt;obliv.h&gt;</code>. The second party should call this function
-    after the first party calls protocolAcceptTcp2P(); 
-    use conditional logic to ensure this. Supply either 'localhost', the IP address, or the DNS name of the 
-    first party to the <code>const char* server</code> parameter.
-  </p>
-  <h2><font face="Arial">bool revealOblivTname(tname* dest, obliv tname src, int party)</font></h2>
+  <h3><font face="Arial">bool revealOblivTname(tname* dest, obliv tname src, int party)</font></h3>
   <p>Obliv-C file; requires <code>#include &lt;obliv.oh&gt;</code>. Return value true means <code>dest</code> was written to.
   <code>party</code> indicates which party will receive the revealed obliv value; enter 0 for all parties to receive the revealed value.
-  Substitutions for <code>tname</code> are bool, char, int, short, long, or long long.
   It is typical for this function to be called towards the end of a Yao protocol.
   </p>
-  <h2><font face="Arial">void setCurrentParty(ProtocolDesc* pd, int party)</font></h2>
-  <p>C file; requires <code>#include &lt;obliv.h&gt;</code>. Sets the proper parties into the ProtocolDesc. 
-  Call this before calling execYaoProtocol().</p>
-  
-  </div>
-  
   
   <p><a href="#top">Go to top</a></p>
         </section>
