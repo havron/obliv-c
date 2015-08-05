@@ -21,7 +21,6 @@
     <header>
       <div class="inner">
         <h1>Obliv-C Docs</h1>
-        <h2></h2>
         <a href="https://github.com/samuelhavron/obliv-c" class="button"><small>View project on</small> GitHub</a>
          <ul id="nav">
       <li><a href="http://samuelhavron.github.io">Home</a></li>
@@ -42,7 +41,7 @@
   <p>The below documentation of Obliv-C protocols, functions, qualifiers, and other aspects of the language is 
   by no means comprehensive, nor is it the standard documentation for the Obliv-C language.
   The documentation is included for the sole purpose of making it simpler for users to understand how to write programs 
-  in Obliv-C successfully, and uses an informal tone to achieve this purpose. The organization of the documentation is alphabetical.
+  in Obliv-C successfully, and uses an informal tone to achieve this purpose.
   <a href="http://samuelhavron.github.io/contact">Contact the author</a> of the documentation 
   with any issues, corrections, or queries.</p>
   
@@ -94,12 +93,12 @@
     }</code>
   </p>
   
-   <h3><font face="Arial">tname ocBroadcastTname(tname v, int source)</font></h3>
+   <h3><font face="Arial">tname ocBroadcast&lt;Tname&gt;(tname v, int source)</font></h3>
   <p>Obliv-C file; requires <code>#include &lt;obliv.oh&gt;</code>. Returns v from the specified source (party). 
   This function allows non-obliv data to be transferred across parties, similar to <code>feedOblivTname()</code>.
   </p>
   
-  <h3><font face="Arial">bool revealOblivTname(tname* dest, obliv tname src, int party)</font></h3>
+  <h3><font face="Arial">bool revealObliv&lt;Tname&gt;(tname* dest, obliv tname src, int party)</font></h3>
   <p>Obliv-C file; requires <code>#include &lt;obliv.oh&gt;</code>. Return value true means <code>dest</code> was written to.
   <code>party</code> indicates which party will receive the revealed obliv value; enter 0 for all parties to receive the revealed value.
   It is typical for this function to be called towards the end of a Yao protocol.
