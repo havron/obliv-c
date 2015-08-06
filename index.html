@@ -88,27 +88,42 @@ Check out the <a href="http://samuelhavron.github.io/obliv-c/documentation">docu
   the two parties.
   <br><br>
   <b>Connecting parties:</b>
-  <pre><code> ... 
-    const char *remote_host = strtok(argv[1], ":");
-    const char *port = strtok(NULL, ":");
+  <pre><code> 	... 
+    const char *remote_host = strtok(argv[1], ":"); // parse hostname from commandline arg
+    const char *port = strtok(NULL, ":"); // parse port name from commandline arg
     ProtocolDesc pd;
     ...
-    if(argv[2][0] == '1') { 
+    if(argv[2][0] == '1') { // if the commandline argument for party is 1
       if(protocolAcceptTcp2P(&pd,port)!=0) { 
 	log_err("TCP accept from %s failed\n", remote_host);
 	exit(1);
       }
     }
-    else {
+    else { // if the commandline argument for party is not 1
       if(protocolConnectTcp2P(&pd,remote_host,port)!=0) {
 	log_err("TCP connect to %s failed\n", remote_host);
 	exit(1);
 	}
-    }</code></pre>
-  The first party calls <code>protocolAcceptTcp2P()</code> to listen for a connection; the second party
-  then calls <code>protocolConnectTcp2P()</code>, supplying the hostname from the commandline argument and connecting to
-  the first party. <code>setCurrentParty()</code> is called, which allows the <code>ProtocolDesc pd</code> 
-  to keep track of parties. <br><br>Now, <code>execYaoProtocol()</code> is called; 
+    }
+    ...
+    currentParty = (argv[2][0]=='1'?1:2);
+    setCurrentParty(&pd, currentParty);</code></pre>
+  The first party calls <code>protocolAcceptTcp2P()</code> to listen for a connection (use of <code>log_err()</code>
+  is specific to <a href="https://github.com/samuelhavron/obliv-c/blob/linReg/tutorial/olinReg/dbg.h">dbg.h</a>
+  and is not necessary to include in your own files for the purpose of making an Obliv-C program. The important
+  takeaway from the above code snippet is that the accept and connect functions were called by the appropriate parties). 
+  Then, the second party calls <code>protocolConnectTcp2P()</code>, 
+  supplying the hostname from the commandline argument and connecting to
+  the first party. After a connection is made,
+  <code>setCurrentParty()</code> is called, which allows the <code>ProtocolDesc pd</code> 
+  to keep track of parties.
+  <br><br>
+  <b>Executing Yao's Protocol:</b>
+  <pre><code>
+  	 // Execute Yao protocol and cleanup
+    execYaoProtocol(&pd, linReg, &io); // starts 'linReg()'
+    cleanupProtocol(&pd);</code></pre>
+  <br>Now, <code>execYaoProtocol()</code> is called; 
   this function begins linReg.oc's code at the supplied
   function name: linReg().
   </p>
