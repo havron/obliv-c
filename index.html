@@ -85,10 +85,10 @@ Check out the <a href="http://samuelhavron.github.io/obliv-c/documentation">docu
   (hostname, TCP port, party, and data filename) to <code>protocolIO io</code> (a struct defined in 
   <a href="https://github.com/samuelhavron/obliv-c/blob/linReg/tutorial/olinReg/linReg.h">linReg.h</a>),
   a connection must be established between
-  the two parties.
+  the two parties. <i>Using the struct is a convenient way to transfer data between your C and Obliv-C files</i>.
   <br><br>
   <b>Connecting parties:</b>
-  <pre><code>   ... 
+  <pre><code>    ... 
     const char *remote_host = strtok(argv[1], ":"); // parse hostname from cmdline
     const char *port = strtok(NULL, ":"); // parse port name from cmdline
     ProtocolDesc pd;
@@ -127,7 +127,12 @@ Check out the <a href="http://samuelhavron.github.io/obliv-c/documentation">docu
   function name: linReg().
   </p>
   <h3><font face="Arial">2. Loading local data and sharing obliv qualified data</font></h3>
-  <p></p>
+  <p><b>Loading local data:</b>
+  	
+  
+  <b>Sharing obliv qualified data:</b>
+  	
+  </p>
   
   <h3><font face="Arial">3. Computing linear regression and using fixed point math</font></h3>
   <p></p>
