@@ -162,19 +162,19 @@ if (party == 1) {
   by comparing its approximate value with its actual value. After the value is scaled and checked for exceeding its boundary,
   it is stored in the appropriate array based on whether it comes from party 1's local file or party 2's. Although the int arrays
   x and y were declared for both parties, only party 1 will have stored data to its own local x int array, and vice versa (if you 
-  need to share the local data values non-obliviously, look at <code>ocBroadcast&lt;Tname&gt;</code> in the documentation).
+  need to share the local data values non-obliviously, look at <code>ocBroadcast&lt;Tname&gt;()</code> in the documentation).
   <br><br>
   <b>Sharing obliv qualified data:</b>
   Now that the data for each party is stored locally in scaled int arrays, the data must be made <code>obliv</code>
   qualified and then shared with the other party as private data:
   <pre><code> ...
-  check_input_count(io);
+check_input_count(io);
   
-  obliv int *ox = malloc(sizeof(obliv int) * io->n);
-  obliv int *oy = malloc(sizeof(obliv int) * io->n);
+obliv int *ox = malloc(sizeof(obliv int) * io->n);
+obliv int *oy = malloc(sizeof(obliv int) * io->n);
   
-  toObliv(io, ox, x, 1);
-  toObliv(io, oy, y, 2);</code></pre>
+toObliv(io, ox, x, 1);
+toObliv(io, oy, y, 2);</code></pre>
   Two new int arrays that are <code>obliv</code> qualified are created, with size n known since it was stored to
   <code>io->n</code> after loading the local data (notice the call to <code>check_input_count()</code> which ensures both
   parties sent the same amount of data using the <code>ocBroadcastInt()</code> function). Then, <code>toObliv()</code>
@@ -195,10 +195,49 @@ void toObliv(protocolIO *io, obliv int *oa, int *a, int party) {
   </p>
   
   <h3><font face="Arial">3. Computing linear regression and using fixed point math</font></h3>
-  <p></p>
+  <p><b>Fixed point math usage:</b>
+  As mentioned in step 2, the data values that have been shared by each party as <code>obliv</code> qualified
+  values were first scaled to be integers from their original float values when being read in from their data files
+  using bit shifting (see <a href="https://github.com/samuelhavron/obliv-c/blob/linReg/tutorial/olinReg/linReg.h">linReg.h</a>
+  for <code>#define SCALE</code> and <code>#define DESCALE()</code>). This changes how multiplication and division
+  can be done on scaled values; see <code>fixed_div()</code> and <code>fixed_mul()</code> in
+  <a href="https://github.com/samuelhavron/obliv-c/blob/linReg/tutorial/olinReg/linReg.oc">linReg.oc</a> to look
+  at the fixes needed (essentially, temporary obliv long long ints had to be used in order to handle the large numbers
+  that result from multiplying the already very high scaled ints, and then adjusting the scale appropriately).
+  
+  <br><br>
+  <b>Computing the function of two parties (linear regression):</b>
+  Our data has been shared obliviously into two arrays, and we are now ready to perform our joint function on our private
+  data (linear regression):
+  
+  <pre><code>  ...
+  int n = io->n;
+  obliv int sumx = sum(ox, n); // sum of x
+  obliv int sumxx = dotProd(ox, ox, n); // sum of each x squared
+  obliv int sumy = sum(oy, n); // sum of y
+  obliv int sumyy = dotProd(oy, oy, n); // sum of each y squared
+  obliv int sumxy = dotProd(ox, oy, n); // sum of each x * y
+
+  // Compute least-squares best fit straight line
+  om = fixed_div(n * sumxy - fixed_mul(sumx, sumy), n * sumxx - osqr(sumx)); // slope
+  ob = fixed_div(fixed_mul(sumy, sumxx) - fixed_mul(sumx, sumxy), n * sumxx - osqr(sumx)); // y-intercept
+
+  obliv int ocov = (n*sumxy - fixed_mul(sumx, sumy));
+  obliv int ostddevs = fixed_mul((n*sumxx) - osqr(sumx), (n*sumyy) - osqr(sumy));
+  obliv int orsqr = fixed_div(osqr(ocov), ostddevs); // sqrt(revealed rsqr) = r</code></pre>
+  First, notice the <code>sum()</code> and <code>dotProd()</code> functions called, which allow us to obtain
+  summations that we need in order to compute our three results: om (obliv slope), ob (obliv y-intercept), and 
+  orsqr (obliv correlation squared). Then we can use those summations to calculate our results; note that all
+  multiplication and division is adjusted for fixed point math. With the results now captured as <code>obliv int</code>s,
+  we are ready to reveal them to the users and cleanup our protocol.
+  </p>
   
   <h3><font face="Arial">4. Revealing results, cleaning up</font></h3>
-  <p></p>
+  <p><b>Revealing results:</b>
+  
+  <br><br>
+  <b>Cleaning up, recording runtime information:</b>
+  </p>
     
   </p>
   <p><a href="#top">Go to top</a></p>
