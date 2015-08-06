@@ -88,7 +88,12 @@ Check out the <a href="http://samuelhavron.github.io/obliv-c/documentation">docu
   the two parties.
   <br><br>
   <b>Connecting parties:</b>
-  <pre><code> if(argv[2][0] == '1') { 
+  <pre><code> ... 
+    const char *remote_host = strtok(argv[1], ":");
+    const char *port = strtok(NULL, ":");
+    ProtocolDesc pd;
+    ...
+    if(argv[2][0] == '1') { 
       if(protocolAcceptTcp2P(&pd,port)!=0) { 
 	log_err("TCP accept from %s failed\n", remote_host);
 	exit(1);
