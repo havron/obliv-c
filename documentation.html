@@ -18,7 +18,7 @@
   </head>
 
   <body>
-    <a name="top"></a>
+    <a id="top"></a>
     <header>
       <div class="inner">
         <h1>Obliv-C Docs</h1>
@@ -62,6 +62,18 @@
   are bool, int, char, short, long, and long long. Non-obliv values can be implicitly converted into obliv, 
   but obliv values cannot be implicitly converted to non-obliv. Doing this requires <code>revealObliv&lt;Tname&gt;()</code> to be called.
   </p>
+  
+  <h3><font face="Arial">Where to begin</font></h3>
+  <p>Take a look through the <a href="http://samuelhavron.github.io/obliv-c">tutorial</a> to get
+  started. In order to start running your Obliv-C program between two parties, ensure that the following Obliv-C library
+  functions are called in order: <br> <ol>
+    <li><font face="Arial">int protocolAcceptTcp2P(ProtocolDesc* pd, const char* port)</font></li>
+    <li><font face="Arial">int protocolConnectTcp2P(ProtocolDesc* pd, const char* server, const char* port)</font></li>
+    <li><font face="Arial">void setCurrentParty(ProtocolDesc* pd, int party)</font></li>
+    <li><font face="Arial">void execYaoProtocol(ProtocolDesc* pd, protocol_run start, void* arg)</font></li>
+    <li>Any Obliv-C functions needed in your .oc file(s)</li>
+    <li><font face="Arial">void cleanupProtocol(ProtocolDesc* pd)</font></li>
+    </ol></p>
   
   <h2>C Functions</h2>
   <h3><font face="Arial">void cleanupProtocol(ProtocolDesc* pd)</font></h3>
