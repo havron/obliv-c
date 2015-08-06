@@ -145,20 +145,53 @@ load_data(io, &x, &y, ocCurrentParty());</code></pre>
   	<a href="https://github.com/samuelhavron/obliv-c/blob/linReg/tutorial/olinReg/linReg.c">linReg.c</a>
   	is called, with the int arrays created in the Obliv-C file being passed in as parameters. <i>It is important to note
   	that calls can be made to C file functions even while being in Yao's protocol and running code in an
-  	Obliv-C file</i>. The majority of the <code>load_data()</code> function is regular C procedures, with the exception
-  	of this code snippet:
-  	<pre><code>
-    int aint = a * SCALE;
-    assert(APPROX((double) DESCALE(aint), a));
-    if (party == 1) {
-      *(*x + io->n - 1) =  aint; // messy, but needed for dereferencing 
-    } else if (party == 2) {
-      *(*y + io->n - 1) =  aint;
-    }</code></pre>
-  	
+  	Obliv-C file</i>. The majority of the <code>load_data()</code> function is comprised of regular C 
+  	procedures, with the exception of this code snippet:
+  	<pre><code>int aint = a * SCALE;
+assert(APPROX((double) DESCALE(aint), a));
+if (party == 1) {
+  *(*x + io->n - 1) =  aint; // messy, but needed for dereferencing 
+} else if (party == 2) {
+  *(*y + io->n - 1) =  aint;
+}</code></pre>
+  The <code>obliv</code> qualifier that we will need for the data to be shared with the other party does not accept
+  the floating point number (<code>a</code>) that is being read in from the data file. Therefore, the value stored
+  in the int array is a scaled value of the float, such that the radix point is eliminated. Because of the scaling that
+  is used on the numbers, data values of over 32,000 cannot be used as they cause integer overflow (a solution would
+  be to use long ints or long long ints). The <code>assert()</code> statement checks for whether the data value exceeds 32,000
+  by comparing its approximate value with its actual value. After the value is scaled and checked for exceeding its boundary,
+  it is stored in the appropriate array based on whether it comes from party 1's local file or party 2's. Although the int arrays
+  x and y were declared for both parties, only party 1 will have stored data to its own local x int array, and vice versa (if you 
+  need to share the local data values non-obliviously, look at <code>ocBroadcast&lt;Tname&gt;</code> in the documentation).
   <br><br>
   <b>Sharing obliv qualified data:</b>
-  	
+  Now that the data for each party is stored locally in scaled int arrays, the data must be made <code>obliv</code>
+  qualified and then shared with the other party as private data:
+  <pre><code> ...
+  check_input_count(io);
+  
+  obliv int *ox = malloc(sizeof(obliv int) * io->n);
+  obliv int *oy = malloc(sizeof(obliv int) * io->n);
+  
+  toObliv(io, ox, x, 1);
+  toObliv(io, oy, y, 2);</code></pre>
+  Two new int arrays that are <code>obliv</code> qualified are created, with size n known since it was stored to
+  <code>io->n</code> after loading the local data (notice the call to <code>check_input_count()</code> which ensures both
+  parties sent the same amount of data using the <code>ocBroadcastInt()</code> function). Then, <code>toObliv()</code>
+  is called:
+  <pre><code>...
+void toObliv(protocolIO *io, obliv int *oa, int *a, int party) {
+ int i, res;
+ for(i = 0; i < io->n; i++) {
+  oa[i] = feedOblivInt(a[i], party);
+ }
+}</code></pre>
+  <code>feedOblivInt()</code> (see documentation) allows both parties to share their data over their network
+  connection as <code>obliv</code>
+  qualified values. The loop in <code>toObliv()</code> goes through each value in each party's respective array.
+  You may notice that while both parties call <code>toObliv()</code> twice, the party from which the local int array 
+  is selected is hardcoded into the function call, so as to prevent party 1 from trying to convert its own y array data
+  (which are all 0 because nothing was ever stored to them) into <code>obliv</code> values, and vice versa.
   </p>
   
   <h3><font face="Arial">3. Computing linear regression and using fixed point math</font></h3>
