@@ -71,10 +71,11 @@
     <li><font face="Arial">int protocolConnectTcp2P(ProtocolDesc* pd, const char* server, const char* port)</font></li>
     <li><font face="Arial">void setCurrentParty(ProtocolDesc* pd, int party)</font></li>
     <li><font face="Arial">void execYaoProtocol(ProtocolDesc* pd, protocol_run start, void* arg)</font></li>
-    <li>Any Obliv-C functions needed in your .oc file(s)</li>
+    <li>Any <a href="#oc-functions">Obliv-C functions</a> needed in your .oc file(s)</li>
     <li><font face="Arial">void cleanupProtocol(ProtocolDesc* pd)</font></li>
     </ol></p>
   
+  <a id="c-functions"></a>
   <h2>C Functions</h2>
   <h3><font face="Arial">void cleanupProtocol(ProtocolDesc* pd)</font></h3>
   <p>C file; requires <code>#include &lt;obliv.h&gt;</code>. Call this function in your C file after execYaoProtocol() has been called. This function will clean up the ProtocolDesc.</p>
@@ -102,6 +103,7 @@
   <p>C file; requires <code>#include &lt;obliv.h&gt;</code>. Sets the proper parties into the ProtocolDesc. 
   Call this before calling execYaoProtocol().</p>
   
+  <a id="oc-functions"></a>
   <h2>Obliv-C Functions</h2>
   
   <h3><font face="Arial">obliv tname feedObliv&lt;Tname&gt;(tname v, int party)</font></h3>
