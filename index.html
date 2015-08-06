@@ -86,7 +86,7 @@ Check out the <a href="http://samuelhavron.github.io/obliv-c/documentation">docu
   <a href="https://github.com/samuelhavron/obliv-c/blob/linReg/tutorial/olinReg/linReg.h">linReg.h</a>),
   a connection must be established between
   the two parties.
-  <br>
+  <br><br>
   <b>Connecting parties:</b>
   <pre><code> if(argv[2][0] == '1') { 
       if(protocolAcceptTcp2P(&pd,port)!=0) { 
@@ -99,9 +99,8 @@ Check out the <a href="http://samuelhavron.github.io/obliv-c/documentation">docu
 	log_err("TCP connect to %s failed\n", remote_host);
 	exit(1);
 	}
-    }
-</code></pre>
-  <br><br>The first party calls <code>protocolAcceptTcp2P()</code> to listen for a connection; the second party
+    }</code></pre>
+  The first party calls <code>protocolAcceptTcp2P()</code> to listen for a connection; the second party
   then calls <code>protocolConnectTcp2P()</code>, supplying the hostname from the commandline argument and connecting to
   the first party. <code>setCurrentParty()</code> is called, which allows the <code>ProtocolDesc pd</code> 
   to keep track of parties. <br><br>Now, <code>execYaoProtocol()</code> is called; 
