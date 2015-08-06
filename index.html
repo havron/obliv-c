@@ -76,15 +76,36 @@ Check out the <a href="http://samuelhavron.github.io/obliv-c/documentation">docu
   functions described below.
   
   <h3><font face="Arial">1. Connecting parties, storing arguments, and executing Yao's protocol</font></h3>
-  <p>Navigate to <code>main()</code> in linReg.c; notice the <code>#include &lt;obliv.h&gt;</code> needed
+  <p><b>Storing Arguments to a Struct:</b>
+  <br>Navigate to <code>main()</code> in 
+  <a href="https://github.com/samuelhavron/obliv-c/blob/linReg/tutorial/olinReg/linReg.c">linReg.c</a>;
+  notice the <code>#include &lt;obliv.h&gt;</code> needed
   to call Obliv-C's built in functions. <code>ProtocolDesc pd</code> is initialized, which is used as an argument for several
-  essential functions. After storing commandline arguments 
-  (hostname, TCP port, party, and data filename) to a struct in linReg.h, a connection must be established between 
-  the two parties. 
+  essential functions. After storing commandline arguments
+  (hostname, TCP port, party, and data filename) to <code>protocolIO io</code> (a struct defined in 
+  <a href="https://github.com/samuelhavron/obliv-c/blob/linReg/tutorial/olinReg/linReg.h">linReg.h</a>),
+  a connection must be established between
+  the two parties.
+  <br>
+  <b>Connecting parties:</b>
+  <pre><code> if(argv[2][0] == '1') { 
+      if(protocolAcceptTcp2P(&pd,port)!=0) { 
+	log_err("TCP accept from %s failed\n", remote_host);
+	exit(1);
+      }
+    }
+    else {
+      if(protocolConnectTcp2P(&pd,remote_host,port)!=0) {
+	log_err("TCP connect to %s failed\n", remote_host);
+	exit(1);
+	}
+    }
+</code></pre>
   <br><br>The first party calls <code>protocolAcceptTcp2P()</code> to listen for a connection; the second party
   then calls <code>protocolConnectTcp2P()</code>, supplying the hostname from the commandline argument and connecting to
   the first party. <code>setCurrentParty()</code> is called, which allows the <code>ProtocolDesc pd</code> 
-  to keep track of parties. <br><br>Now, <code>execYaoProtocol()</code> is called; this function begins linReg.oc's code at the supplied
+  to keep track of parties. <br><br>Now, <code>execYaoProtocol()</code> is called; 
+  this function begins linReg.oc's code at the supplied
   function name: linReg().
   </p>
   <h3><font face="Arial">2. Loading local data and sharing obliv qualified data</font></h3>
