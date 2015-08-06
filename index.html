@@ -127,7 +127,34 @@ Check out the <a href="http://samuelhavron.github.io/obliv-c/documentation">docu
   function name: linReg().
   </p>
   <h3><font face="Arial">2. Loading local data and sharing obliv qualified data</font></h3>
-  <p><b>Loading local data:</b>
+  <p><b>Loading local data and obtaining protocolIO struct values in Obliv-C:</b>
+  	Navigate to <a href="https://github.com/samuelhavron/obliv-c/blob/linReg/tutorial/olinReg/linReg.oc">linReg.oc</a>
+  	and look at the <code>void linReg()</code> function; this function was called by <code>execYaoProtocol()</code>
+  	at the end of step 1. 
+  		<pre><code>protocolIO *io = (protocolIO*) args;
+int *x = malloc(sizeof(int) * ALLOC);
+int *y = malloc(sizeof(int) * ALLOC);
+...
+load_data(io, &x, &y, ocCurrentParty());</code></pre>
+	Notice that the struct used for transferring variables across C and Obliv-C files (<code>protocolIO io</code>)
+  	is obtained from the call to <code>linReg()</code> by <code>execYaoProtocol()</code>.
+  	To load the data points (the private input) from local files for each party, two int arrays were
+  	created with <code>ALLOC</code> being an initial size defined in 
+  	<a href="https://github.com/samuelhavron/obliv-c/blob/linReg/tutorial/olinReg/linReg.h">linReg.h</a>.
+  	The <code>load_data()</code> function from 
+  	<a href="https://github.com/samuelhavron/obliv-c/blob/linReg/tutorial/olinReg/linReg.c">linReg.c</a>
+  	is called, with the int arrays created in the Obliv-C file being passed in as parameters. <i>It is important to note
+  	that calls can be made to C file functions even while being in Yao's protocol and running code in an
+  	Obliv-C file</i>. The majority of the <code>load_data()</code> function is regular C procedures, with the exception
+  	of this code snippet:
+  	<pre><code>
+    int aint = a * SCALE;
+    assert(APPROX((double) DESCALE(aint), a));
+    if (party == 1) {
+      *(*x + io->n - 1) =  aint; // messy, but needed for dereferencing 
+    } else if (party == 2) {
+      *(*y + io->n - 1) =  aint;
+    }</code></pre>
   	
   <br><br>
   <b>Sharing obliv qualified data:</b>
