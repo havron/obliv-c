@@ -119,10 +119,9 @@ Check out the <a href="http://samuelhavron.github.io/obliv-c/documentation">docu
   to keep track of parties.
   <br><br>
   <b>Executing Yao's Protocol:</b>
-  <pre><code>
-  	 // Execute Yao protocol and cleanup
-    execYaoProtocol(&pd, linReg, &io); // starts 'linReg()'
-    cleanupProtocol(&pd);</code></pre>
+  <pre><code>// Execute Yao protocol and cleanup
+  execYaoProtocol(&pd, linReg, &io); // starts 'linReg()'
+  cleanupProtocol(&pd);</code></pre>
   <br>Now, <code>execYaoProtocol()</code> is called; 
   this function begins linReg.oc's code at the supplied
   function name: linReg().
