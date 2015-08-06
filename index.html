@@ -88,9 +88,9 @@ Check out the <a href="http://samuelhavron.github.io/obliv-c/documentation">docu
   the two parties.
   <br><br>
   <b>Connecting parties:</b>
-  <pre><code> 	... 
-    const char *remote_host = strtok(argv[1], ":"); // parse hostname from cmdline arg
-    const char *port = strtok(NULL, ":"); // parse port name from cmdline arg
+  <pre><code>... 
+    const char *remote_host = strtok(argv[1], ":"); // parse hostname from cmdline
+    const char *port = strtok(NULL, ":"); // parse port name from cmdline
     ProtocolDesc pd;
     ...
     if(argv[2][0] == '1') { // if the cmdline argument for party is 1
